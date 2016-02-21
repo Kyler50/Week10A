@@ -1,75 +1,79 @@
 package abstract_and_interface;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Movie extends Product implements Buyable{
-	Genre genre;
-	long duration;
-	double rate;
-	List <Person> cast = new ArrayList<Person>();
-	int price;
-	
+public class Movie extends Product implements Buyable {
+    private Genre genre;
+    private long duration;
+    private double rate;
+    private List<Person> cast;
+    private int price;
+    
+    public Movie(String title, Person borrower,
+	    Genre genre, long duration, double rate, List<Person> cast, int price) {
+	super(title, borrower);
+	this.genre = genre;
+	this.duration = duration;
+	this.rate = rate;
+	this.cast = cast;
+	this.price = price;
+    }
 
-	
-	public Movie(String id, String title, Person person, Genre genre, long duration, double rate, List<Person> cast,
-		int price) {
-		super(id, title, person);
-		this.genre = genre;
-		this.duration = duration;
-		this.rate = rate;
-		this.cast = cast;
-		this.price = price;
-	}
+    public Genre getGenre() {
+        return genre;
+    }
 
-	public Genre getGenre() {
-		return genre;
-	}
-	
-	public void setGenre(Genre genre) {
-		this.genre = genre;
-	}
-	
-	public long getDuration() {
-		return duration;
-	}
-	
-	public void setDuration(long duration) {
-		this.duration = duration;
-	}
-	
-	public double getRate() {
-		return rate;
-	}
-	
-	public void setRate(double rate) {
-		this.rate = rate;
-	}
-	
-	public String toString(){
-		return "Id: " + id + "\nTitle: " + title + "\nProducer: " + person + "\nGenre: " + genre + "\nLong: " + duration + "\nRate: " + rate + "\nCast: " + cast;
-	}
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
 
-	public List<Person> getCast() {
-		return cast;
-	}
+    public long getDuration() {
+        return duration;
+    }
 
-	public void setCast(List<Person> cast) {
-		this.cast = cast;
-	}
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
 
-	public int getPrice() {
-		return price;
-	}
+    public double getRate() {
+        return rate;
+    }
 
-	public void setPrice(int price) {
-		this.price = price;
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public List<Person> getCast() {
+        return cast;
+    }
+
+    public void setCast(List<Person> cast) {
+        this.cast = cast;
+    }
+
+    public void setPrice(int price) {
+	this.price = price;
+    }
+    
+    @Override
+    public int getPrice() {
+	return price;
+    }
+
+    @Override
+    public long getInvestment() {
+	long movieInvestment = 0;
+	for (Person person : cast) {
+	    movieInvestment += person.getSalary();
 	}
-	
-	public long getiInvestement() {
-		long summaSalary = 0;
-		for (Person person : cast) {
-			summaSalary += person.getSalary();
-		}
-		return summaSalary;
-	}
+	return movieInvestment;
+    }
+
+    @Override
+    public String toString() {
+	StringBuffer buffer = new StringBuffer();
+	buffer.append("Movie [genre=").append(genre).append(", duration=").append(duration).append(", rate=")
+	.append(rate).append(", price=").append(price).append(", ID=").append(getId())
+	.append(", title=").append(getTitle()).append("]");
+	return buffer.toString();
+    }
 }

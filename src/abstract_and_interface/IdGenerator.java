@@ -1,18 +1,17 @@
 package abstract_and_interface;
 
 public class IdGenerator {
-	public static String generate(Product product, String id){		
-		String newId = "";
-			
-		if (product instanceof Movie) {
-				newId = "MOV_" + id;
-			} 
-		if (product instanceof Game) {
-				newId = "GAM_" + id;
-			} 
-		if (product instanceof Book) {
-				newId = "BOO_" + id;
-			}
-		return newId;
-		}
+
+    public static String generate(Product product) {
+	StringBuffer result = new StringBuffer();
+	if (product instanceof Movie) {
+	    result.append("MOV");
+	} else if (product instanceof Game) {
+	    result.append("GAM");
+	} 
+	else result.append("BOO");
+	result.append(System.identityHashCode(product));
+	
+	return result.toString();
+    }
 }

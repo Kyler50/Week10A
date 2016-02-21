@@ -1,28 +1,28 @@
 package abstract_and_interface;
 
-public class Product {
-	String id;
-	String title;
-	Person person;
-	
-	public Product(String id, String title, Person person) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.person = person;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public Person getPerson() {
-		return person;
-	}
-	
-	public String toString(){
-		return "Id: " + id + "\nTitle: " + title + "\nPerson: " + person;
-	}
-	
-	public long getiInvestement() {
-		return 0;
-	}
+public abstract class Product {
+    private String id;
+    private String title;
+    private Person borrower;
+    
+    public Product(String title, Person borrower) {
+	this.title = title;
+	this.borrower = borrower;
+	this.id = IdGenerator.generate(this);
+    }
+
+    public String getId() {
+	return id;
+    }
+    
+    public String getTitle() {
+        return title;
+    }
+    
+    public Person getBorrower() {
+        return borrower;
+    }
+    
+    public abstract long getInvestment();
+    
 }
