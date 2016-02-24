@@ -1,8 +1,11 @@
 package abstract_and_interface;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-
 import abstract_and_interface.Genre;
 import abstract_and_interface.Gender;
 
@@ -84,18 +87,42 @@ public class RentManager {
 	Product tokillamockingbird = new Book("To Kill a Mockingbird", lauratook, harperlee);
 	System.out.println(tokillamockingbird);
 	
-	System.out.println("\nThese are product investments:");
-	System.out.println(LoL.getTitle() + " " + LoL.getInvestment());
-	System.out.println(Irobot.getTitle() + " " + Irobot.getInvestment());
-	System.out.println(tokillamockingbird.getTitle() + " " + tokillamockingbird.getInvestment());
 	
-	List<Buyable> products = new ArrayList<Buyable>();
-	products.add((Buyable) Insidious);
-	products.add((Buyable) Deadpool);
-	products.add((Buyable) LoL);
-	products.add((Buyable) fallout4);
+	try
+	{
+		Socket clientSocket = new Socket("localhost", 3305);
+		System.out.println("Connected to Server\n");
+		ObjectOutputStream outToServer = new ObjectOutputStream(clientSocket.getOutputStream());
+		ObjectInputStream inFromServer = new ObjectInputStream(clientSocket.getInputStream());
+		Thread.sleep(3000);
+		send(outToServer, Command.PUT);
+		send(outToServer, rosebyrne);
+		send(outToServer, Command.GET);
+		Object readFromServer = inFromServer.readObject();
+		if (readFromServer instanceof List)
+		{
+
+			List<Object> dataFromServer = (List<Object>) readFromServer;
+			for (Object object : dataFromServer)
+			{
+
+				System.out.println(object);
+			}
+		}
+		send(outToServer, Command.EXIT);
+	}
+	catch (IOException | ClassNotFoundException | InterruptedException e)
+	{
+		e.printStackTrace();
+	}
+}
+    
 	
-	System.out.print("\nThe price of two movies (Insidious, Deadpool) and two games (Lol, fallout4): ");
-	System.out.println(RentManager.calculatePrice(products));
-    }
+	public static void send(ObjectOutputStream x, Object object) throws IOException
+	{
+	x.write(0);
+	x.writeObject(object);
+	}
+	
+	
 }

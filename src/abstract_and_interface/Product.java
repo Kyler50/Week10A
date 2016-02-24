@@ -1,7 +1,7 @@
 package abstract_and_interface;
-
-public abstract class Product {
-    private String id;
+import java.io.Serializable;
+public abstract class Product implements Serializable {
+	private String id;
     private String title;
     private Person borrower;
     

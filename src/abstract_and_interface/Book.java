@@ -1,6 +1,6 @@
 package abstract_and_interface;
-
-public class Book extends Product {
+import java.io.Serializable;
+public class Book extends Product implements Serializable {
     private Person author;
     
     public Book(String title, Person borrower, Person author) {

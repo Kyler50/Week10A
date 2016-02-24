@@ -1,7 +1,8 @@
 package abstract_and_interface;
 import java.util.List;
+import java.io.Serializable;
 
-public class Movie extends Product implements Buyable {
+public class Movie extends Product implements Buyable, Serializable {
     private Genre genre;
     private long duration;
     private double rate;
